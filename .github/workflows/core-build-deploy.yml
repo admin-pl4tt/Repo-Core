@@ -4,55 +4,81 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  build-deploy:
     runs-on: windows-latest
 
     steps:
+      # Checkout repository
       - name: Checkout
         uses: actions/checkout@v3
 
+      # Install Power Platform CLI actions
       - name: Install Power Platform CLI
         uses: microsoft/powerplatform-actions/actions-install@v1
 
-      # 1 Export unmanaged from ALM-CORE
-      - name: Export Unmanaged Solution
+      # Increment solution version (revision only: 1.0.0.1 -> 1.0.0.2)
+      - name: Increment Solution Version
+        uses: microsoft/powerplatform-actions/set-solution-version@v1
+        with:
+          environment-url: ${{ secrets.CORE_ENV_URL }}
+          app-id: ${{ secrets.APP_ID }}
+          client-secret: ${{ secrets.CLIENT_SECRET }}
+          tenant-id: ${{ secrets.TENANT_ID }}
+          solution-name: CoreSolution
+          strategy: Revision
+
+      # Export unmanaged solution from ALM-CORE
+      - name: Export Unmanaged
         uses: microsoft/powerplatform-actions/export-solution@v1
         with:
           environment-url: ${{ secrets.CORE_ENV_URL }}
-          app-id: ${{ secrets.CORE_APP_ID }}
-          client-secret: ${{ secrets.CORE_CLIENT_SECRET }}
+          app-id: ${{ secrets.APP_ID }}
+          client-secret: ${{ secrets.CLIENT_SECRET }}
           tenant-id: ${{ secrets.TENANT_ID }}
           solution-name: CoreSolution
           managed: false
-          solution-output-file: ./CoreSolution_unmanaged.zip
+          solution-output-file: ./Core_unmanaged.zip
 
-      # 2 Pack managed version
-      - name: Pack Managed Solution
+      # Pack managed version from exported solution
+      - name: Pack Managed
         uses: microsoft/powerplatform-actions/pack-solution@v1
         with:
-          solution-file: ./CoreSolution_unmanaged.zip
+          solution-file: ./Core_unmanaged.zip
           solution-type: Managed
-          solution-folder: ./managed
-          solution-output-file: ./CoreSolution_managed.zip
+          solution-output-file: ./Core_managed.zip
 
-      # 3 Deploy to DEV1
+      # Deploy managed CORE to DEV1
       - name: Deploy to DEV1
         uses: microsoft/powerplatform-actions/import-solution@v1
         with:
           environment-url: ${{ secrets.DEV1_ENV_URL }}
-          app-id: ${{ secrets.DEV1_APP_ID }}
-          client-secret: ${{ secrets.DEV1_CLIENT_SECRET }}
+          app-id: ${{ secrets.APP_ID }}
+          client-secret: ${{ secrets.CLIENT_SECRET }}
           tenant-id: ${{ secrets.TENANT_ID }}
-          solution-file: ./CoreSolution_managed.zip
+          solution-file: ./Core_managed.zip
           publish-changes: true
+          force-overwrite: true
 
-      # 4 Deploy to DEV2
+      # Deploy managed CORE to DEV2
       - name: Deploy to DEV2
         uses: microsoft/powerplatform-actions/import-solution@v1
         with:
           environment-url: ${{ secrets.DEV2_ENV_URL }}
-          app-id: ${{ secrets.DEV2_APP_ID }}
-          client-secret: ${{ secrets.DEV2_CLIENT_SECRET }}
+          app-id: ${{ secrets.APP_ID }}
+          client-secret: ${{ secrets.CLIENT_SECRET }}
           tenant-id: ${{ secrets.TENANT_ID }}
-          solution-file: ./CoreSolution_managed.zip
+          solution-file: ./Core_managed.zip
           publish-changes: true
+          force-overwrite: true
+
+      # Deploy managed CORE to TEST
+      - name: Deploy to TEST
+        uses: microsoft/powerplatform-actions/import-solution@v1
+        with:
+          environment-url: ${{ secrets.TEST_ENV_URL }}
+          app-id: ${{ secrets.APP_ID }}
+          client-secret: ${{ secrets.CLIENT_SECRET }}
+          tenant-id: ${{ secrets.TENANT_ID }}
+          solution-file: ./Core_managed.zip
+          publish-changes: true
+          force-overwrite: true
