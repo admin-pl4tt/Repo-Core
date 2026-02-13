@@ -12,11 +12,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      # Install Power Platform CLI actions
+      # Install Power Platform CLI
       - name: Install Power Platform CLI
         uses: microsoft/powerplatform-actions/actions-install@v1
 
-      # Export unmanaged solution from ALM-CORE
+      # Create working folders
+      - name: Create output folders
+        run: |
+          mkdir out
+          mkdir src
+
+      # Export unmanaged solution from CORE
       - name: Export Unmanaged
         uses: microsoft/powerplatform-actions/export-solution@v1
         with:
@@ -26,15 +32,24 @@ jobs:
           tenant-id: ${{ secrets.TENANT_ID }}
           solution-name: ALMCORE
           managed: false
-          solution-output-file: ./Core_unmanaged.zip
+          solution-output-file: ALMCORE.zip
+          working-directory: out
 
-      # Pack managed version from exported solution
+      # Unpack unmanaged to source folder
+      - name: Unpack Solution
+        uses: microsoft/powerplatform-actions/unpack-solution@v1
+        with:
+          solution-file: out/ALMCORE.zip
+          solution-folder: src/ALMCORE
+          solution-type: Unmanaged
+
+      # Pack managed solution from source folder
       - name: Pack Managed
         uses: microsoft/powerplatform-actions/pack-solution@v1
         with:
-          solution-file: ./Core_unmanaged.zip
+          solution-folder: src/ALMCORE
           solution-type: Managed
-          solution-output-file: ./Core_managed.zip
+          solution-file: out/ALMCORE_managed.zip
 
       # Deploy managed CORE to DEV1
       - name: Deploy to DEV1
@@ -44,7 +59,7 @@ jobs:
           app-id: ${{ secrets.APP_ID }}
           client-secret: ${{ secrets.CLIENT_SECRET }}
           tenant-id: ${{ secrets.TENANT_ID }}
-          solution-file: ./Core_managed.zip
+          solution-file: out/ALMCORE_managed.zip
           publish-changes: true
           force-overwrite: true
 
@@ -56,7 +71,7 @@ jobs:
           app-id: ${{ secrets.APP_ID }}
           client-secret: ${{ secrets.CLIENT_SECRET }}
           tenant-id: ${{ secrets.TENANT_ID }}
-          solution-file: ./Core_managed.zip
+          solution-file: out/ALMCORE_managed.zip
           publish-changes: true
           force-overwrite: true
 
@@ -68,6 +83,6 @@ jobs:
           app-id: ${{ secrets.APP_ID }}
           client-secret: ${{ secrets.CLIENT_SECRET }}
           tenant-id: ${{ secrets.TENANT_ID }}
-          solution-file: ./Core_managed.zip
+          solution-file: out/ALMCORE_managed.zip
           publish-changes: true
           force-overwrite: true
