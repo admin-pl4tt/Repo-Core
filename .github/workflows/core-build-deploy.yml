@@ -16,17 +16,6 @@ jobs:
       - name: Install Power Platform CLI
         uses: microsoft/powerplatform-actions/actions-install@v1
 
-      # Increment solution version (revision only: 1.0.0.1 -> 1.0.0.2)
-      - name: Increment Solution Version
-        uses: microsoft/powerplatform-actions/pac-cli@v1
-        with:
-          environment-url: ${{ secrets.CORE_ENV_URL }}
-          app-id: ${{ secrets.APP_ID }}
-          client-secret: ${{ secrets.CLIENT_SECRET }}
-          tenant-id: ${{ secrets.TENANT_ID }}
-          solution-name: ALMCORE
-          strategy: Revision
-
       # Export unmanaged solution from ALM-CORE
       - name: Export Unmanaged
         uses: microsoft/powerplatform-actions/export-solution@v1
