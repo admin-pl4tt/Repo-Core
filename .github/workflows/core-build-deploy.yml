@@ -8,9 +8,18 @@ on:
         required: true
         default: "false"
 
-# REQUIRED so github-actions can push commits
 permissions:
   contents: write
+
+env:
+  CORE_ENV_URL: ${{ secrets.CORE_ENV_URL }}
+  DEV1_ENV_URL: ${{ secrets.DEV1_ENV_URL }}
+  DEV2_ENV_URL: ${{ secrets.DEV2_ENV_URL }}
+  TEST_ENV_URL: ${{ secrets.TEST_ENV_URL }}
+  APP_ID: ${{ secrets.APP_ID }}
+  CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+  TENANT_ID: ${{ secrets.TENANT_ID }}
+  SOLUTION_NAME: ALMCORE   # Ensure this is the UNIQUE NAME
 
 jobs:
   core-build:
@@ -18,7 +27,7 @@ jobs:
 
     steps:
       # ----------------------------
-      # Checkout with push capability
+      # Checkout
       # ----------------------------
       - name: Checkout
         uses: actions/checkout@v3
@@ -28,10 +37,34 @@ jobs:
       - name: Install Power Platform CLI
         uses: microsoft/powerplatform-actions/actions-install@v1
 
+      # ----------------------------
+      # Validate SPN Authentication
+      # ----------------------------
+      - name: Validate Authentication
+        uses: microsoft/powerplatform-actions/who-am-i@v1
+        with:
+          environment-url: ${{ env.CORE_ENV_URL }}
+          app-id: ${{ env.APP_ID }}
+          client-secret: ${{ env.CLIENT_SECRET }}
+          tenant-id: ${{ env.TENANT_ID }}
+
       - name: Create working folders
         run: |
           mkdir out
           mkdir src
+
+      # ----------------------------
+      # Auto Version Bump
+      # ----------------------------
+      - name: Set Solution Version
+        uses: microsoft/powerplatform-actions/set-solution-version@v1
+        with:
+          environment-url: ${{ env.CORE_ENV_URL }}
+          app-id: ${{ env.APP_ID }}
+          client-secret: ${{ env.CLIENT_SECRET }}
+          tenant-id: ${{ env.TENANT_ID }}
+          solution-name: ${{ env.SOLUTION_NAME }}
+          solution-version-number: 1.0.${{ github.run_number }}
 
       # ----------------------------
       # Export Unmanaged (Source Control)
@@ -39,11 +72,11 @@ jobs:
       - name: Export CORE Unmanaged
         uses: microsoft/powerplatform-actions/export-solution@v1
         with:
-          environment-url: ${{ secrets.CORE_ENV_URL }}
-          app-id: ${{ secrets.APP_ID }}
-          client-secret: ${{ secrets.CLIENT_SECRET }}
-          tenant-id: ${{ secrets.TENANT_ID }}
-          solution-name: ALMCORE   # ensure this is the UNIQUE NAME
+          environment-url: ${{ env.CORE_ENV_URL }}
+          app-id: ${{ env.APP_ID }}
+          client-secret: ${{ env.CLIENT_SECRET }}
+          tenant-id: ${{ env.TENANT_ID }}
+          solution-name: ${{ env.SOLUTION_NAME }}
           managed: false
           solution-output-file: ALMCORE_unmanaged.zip
           working-directory: out
@@ -54,45 +87,42 @@ jobs:
           solution-file: out/ALMCORE_unmanaged.zip
           solution-folder: src/ALMCORE
           solution-type: Unmanaged
+          overwrite-files: true
 
-      # ----------------------------
-      # Commit to Source Control
-      # ----------------------------
       - name: Commit Unpacked CORE
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
           git add src
-          git commit -m "Update ALMCORE source from CORE environment" || echo "No changes detected"
+          git commit -m "Update ALMCORE source" || echo "No changes detected"
           git push
 
       # ----------------------------
-      # Export Managed (Artifact)
+      # Export Managed (Promotion Artifact)
       # ----------------------------
       - name: Export CORE Managed
         uses: microsoft/powerplatform-actions/export-solution@v1
         with:
-          environment-url: ${{ secrets.CORE_ENV_URL }}
-          app-id: ${{ secrets.APP_ID }}
-          client-secret: ${{ secrets.CLIENT_SECRET }}
-          tenant-id: ${{ secrets.TENANT_ID }}
-          solution-name: ALMCORE
+          environment-url: ${{ env.CORE_ENV_URL }}
+          app-id: ${{ env.APP_ID }}
+          client-secret: ${{ env.CLIENT_SECRET }}
+          tenant-id: ${{ env.TENANT_ID }}
+          solution-name: ${{ env.SOLUTION_NAME }}
           managed: true
           solution-output-file: ALMCORE_managed.zip
           working-directory: out
 
       # ----------------------------
-      # Optional Deployment Section
+      # Optional Deployment
       # ----------------------------
-
       - name: Deploy CORE to DEV1
         if: ${{ github.event.inputs.deploy == 'true' }}
         uses: microsoft/powerplatform-actions/import-solution@v1
         with:
-          environment-url: ${{ secrets.DEV1_ENV_URL }}
-          app-id: ${{ secrets.APP_ID }}
-          client-secret: ${{ secrets.CLIENT_SECRET }}
-          tenant-id: ${{ secrets.TENANT_ID }}
+          environment-url: ${{ env.DEV1_ENV_URL }}
+          app-id: ${{ env.APP_ID }}
+          client-secret: ${{ env.CLIENT_SECRET }}
+          tenant-id: ${{ env.TENANT_ID }}
           solution-file: out/ALMCORE_managed.zip
           publish-changes: true
           force-overwrite: true
@@ -101,10 +131,10 @@ jobs:
         if: ${{ github.event.inputs.deploy == 'true' }}
         uses: microsoft/powerplatform-actions/import-solution@v1
         with:
-          environment-url: ${{ secrets.DEV2_ENV_URL }}
-          app-id: ${{ secrets.APP_ID }}
-          client-secret: ${{ secrets.CLIENT_SECRET }}
-          tenant-id: ${{ secrets.TENANT_ID }}
+          environment-url: ${{ env.DEV2_ENV_URL }}
+          app-id: ${{ env.APP_ID }}
+          client-secret: ${{ env.CLIENT_SECRET }}
+          tenant-id: ${{ env.TENANT_ID }}
           solution-file: out/ALMCORE_managed.zip
           publish-changes: true
           force-overwrite: true
@@ -113,10 +143,10 @@ jobs:
         if: ${{ github.event.inputs.deploy == 'true' }}
         uses: microsoft/powerplatform-actions/import-solution@v1
         with:
-          environment-url: ${{ secrets.TEST_ENV_URL }}
-          app-id: ${{ secrets.APP_ID }}
-          client-secret: ${{ secrets.CLIENT_SECRET }}
-          tenant-id: ${{ secrets.TENANT_ID }}
+          environment-url: ${{ env.TEST_ENV_URL }}
+          app-id: ${{ env.APP_ID }}
+          client-secret: ${{ env.CLIENT_SECRET }}
+          tenant-id: ${{ env.TENANT_ID }}
           solution-file: out/ALMCORE_managed.zip
           publish-changes: true
           force-overwrite: true
