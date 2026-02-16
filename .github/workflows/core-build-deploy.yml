@@ -8,13 +8,22 @@ on:
         required: true
         default: "false"
 
+# REQUIRED so github-actions can push commits
+permissions:
+  contents: write
+
 jobs:
   core-build:
     runs-on: windows-latest
 
     steps:
+      # ----------------------------
+      # Checkout with push capability
+      # ----------------------------
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          persist-credentials: true
 
       - name: Install Power Platform CLI
         uses: microsoft/powerplatform-actions/actions-install@v1
@@ -34,7 +43,7 @@ jobs:
           app-id: ${{ secrets.APP_ID }}
           client-secret: ${{ secrets.CLIENT_SECRET }}
           tenant-id: ${{ secrets.TENANT_ID }}
-          solution-name: ALMCORE
+          solution-name: ALMCORE   # ensure this is the UNIQUE NAME
           managed: false
           solution-output-file: ALMCORE_unmanaged.zip
           working-directory: out
@@ -46,12 +55,15 @@ jobs:
           solution-folder: src/ALMCORE
           solution-type: Unmanaged
 
+      # ----------------------------
+      # Commit to Source Control
+      # ----------------------------
       - name: Commit Unpacked CORE
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
           git add src
-          git commit -m "Update ALMCORE source" || echo "No changes detected"
+          git commit -m "Update ALMCORE source from CORE environment" || echo "No changes detected"
           git push
 
       # ----------------------------
