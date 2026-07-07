@@ -1,0 +1,11 @@
+<botcomponent schemaname="cr1d7_672e4b2c-fa12-4753-864a-1a15d11ccd72.topic.OnError">
+  <componenttype>9</componenttype>
+  <description>This system topic triggers when the agent encounters an error. When using the test chat pane, the full error description is displayed.</description>
+  <iscustomizable>0</iscustomizable>
+  <name>On Error</name>
+  <parentbotid>
+    <schemaname>cr1d7_672e4b2c-fa12-4753-864a-1a15d11ccd72</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

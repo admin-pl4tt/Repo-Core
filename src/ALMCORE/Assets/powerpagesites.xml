@@ -1,0 +1,11 @@
+<powerpagesites>
+  <powerpagesite powerpagesiteid="e4900ab0-76ec-4dcd-bc6f-3675bba7bb47">
+    <content>{"defaultlanguage":"f8e2d9c3-c7d1-4108-b6ba-ea7eade5f3f0","footerwebtemplateid":"4cc5e219-3b7d-4413-b49c-70c57e632de2","headerwebtemplateid":"9fa3ef08-59d0-48f3-a8ec-eab87b2fe94b","website_language":1033,"defaultbotconsumerid":"3e819d59-3f7a-f111-ab0e-6045bd06ea0f"}</content>
+    <datamodelversion>2.0</datamodelversion>
+    <iscustomizable>1</iscustomizable>
+    <name>Site 1 - site-gnq6b</name>
+    <primarydomainname>site-gnq6b.powerappsportals.com</primarydomainname>
+    <statecode>0</statecode>
+    <statuscode>1</statuscode>
+  </powerpagesite>
+</powerpagesites>

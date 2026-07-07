@@ -35,6 +35,14 @@
                         <control id="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" />
                       </cell>
                     </row>
+                    <row>
+                      <cell id="{b43d5206-bccc-48a2-8d19-48c5f43c5a49}" locklevel="0" rowspan="1" colspan="1">
+                        <labels>
+                          <label description="Choice" languagecode="1033" />
+                        </labels>
+                        <control id="alm_choice" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="alm_choice" disabled="false" />
+                      </cell>
+                    </row>
                   </rows>
                 </section>
               </sections>
@@ -42,6 +50,51 @@
           </columns>
         </tab>
       </tabs>
+      <header id="{9188603b-3a6f-463b-885e-ae3b2e392774}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{6086d677-375a-49b2-b937-95c205e67798}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{18d2fb85-b651-4a59-9ba7-8246d1d86006}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{ffee5945-878f-4be5-90a0-843ae4456a57}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <footer id="{151989ac-9eee-48cc-bbfe-4e4b41bb79fb}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{2fd1724e-f3e1-4644-810b-03fcd93edb80}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{1c8dc121-3679-4d25-bd8a-914812fd716c}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{2ab9835d-03f9-4650-b0b7-e7cf9dc59c93}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </footer>
+      <DisplayConditions Order="0" FallbackForm="true">
+        <Everyone />
+      </DisplayConditions>
     </form>
     <IsCustomizable>1</IsCustomizable>
     <CanBeDeleted>1</CanBeDeleted>

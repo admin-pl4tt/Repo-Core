@@ -12,6 +12,7 @@
         <row name="alm_almcoretable" id="alm_almcoretableid">
           <cell name="alm_name" width="300" />
           <cell name="createdon" width="125" />
+          <cell name="alm_choice" width="100" />
         </row>
       </grid>
     </layoutxml>
@@ -26,6 +27,7 @@
           <filter type="and">
             <condition attribute="statecode" operator="eq" value="0" />
           </filter>
+          <attribute name="alm_choice" />
         </entity>
       </fetch>
     </fetchxml>

@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ImportExportXml version="9.2.25123.166" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.25123.166" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.26012.00156">
+<ImportExportXml version="9.2.26061.153" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.26061.153" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.26061.00153">
   <SolutionManifest>
     <UniqueName>ALMCORE</UniqueName>
     <LocalizedNames>
       <LocalizedName description="ALM-CORE" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>1.0.14</Version>
+    <Version>1.0.15</Version>
     <Managed>0</Managed>
     <Publisher>
       <UniqueName>ALM</UniqueName>
@@ -80,7 +80,104 @@
     <RootComponents>
       <RootComponent type="1" schemaName="alm_almcoretable" behavior="0" />
       <RootComponent type="1" schemaName="alm_almtable" behavior="0" />
+      <RootComponent type="1" schemaName="knowledgearticle" behavior="1" />
+      <RootComponent type="1" schemaName="msdyn_kbattachment" behavior="1" />
+      <RootComponent type="62" schemaName="alm_ALM" behavior="0" />
+      <RootComponent type="80" schemaName="alm_ALM" behavior="0" />
     </RootComponents>
-    <MissingDependencies />
+    <MissingDependencies>
+      <MissingDependency>
+        <Required type="1" schemaName="knowledgearticle" displayName="KnowledgeArticle" parentSchemaName="" solution="msdynce_KnowledgeManagementFeatures (9.0.26023.5001)" />
+        <Dependent type="1" schemaName="knowledgearticle" displayName="KnowledgeArticle" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="msdyn_kbattachment" displayName="Knowledge Article Attachment" solution="msdynce_KnowledgeManagementFeatures (9.0.26023.5001)">
+          <package appName="msdynce_KnowledgeManagement" version="9.0.26023.5001">msdynce_KnowledgeManagementAnchor (9.0.26023.5001)</package>
+        </Required>
+        <Dependent type="1" schemaName="msdyn_kbattachment" displayName="Knowledge Article Attachment" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="msdyn_kbattachment" displayName="Knowledge Article Attachment" solution="msdynce_KnowledgeManagementFeatures (9.0.26023.5001)">
+          <package appName="msdynce_KnowledgeManagement" version="9.0.26023.5001">msdynce_KnowledgeManagementAnchor (9.0.26023.5001)</package>
+        </Required>
+        <Dependent type="26" schemaName="Site 1 bot Answers" displayName="Site 1 bot Answers" parentSchemaName="msdyn_kbattachment" parentDisplayName="Knowledge Article Attachment" id="{157db2fa-8a39-4d40-923f-9617273c7418}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="1" schemaName="msdyn_kbattachment" displayName="Knowledge Article Attachment" solution="msdynce_KnowledgeManagementFeatures (9.0.26023.5001)">
+          <package appName="msdynce_KnowledgeManagement" version="9.0.26023.5001">msdynce_KnowledgeManagementAnchor (9.0.26023.5001)</package>
+        </Required>
+        <Dependent type="DVFileSearchEntity" id="{9d290f87-e4fb-4515-aa76-c537c019274c}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="msdyn_contentstore" displayName="File storage content reference" parentSchemaName="knowledgearticle" parentDisplayName="Knowledge Article" solution="msdynce_KnowledgeManagementPatch (9.0.26023.5001)">
+          <package appName="msdynce_KnowledgeManagement" version="9.0.26023.5001">msdynce_KnowledgeManagementAnchor (9.0.26023.5001)</package>
+        </Required>
+        <Dependent type="26" schemaName="Site 1 bot Answers" displayName="Site 1 bot Answers" parentSchemaName="knowledgearticle" parentDisplayName="Knowledge Article" id="{09a18dad-e0dc-44e4-b2f2-2826c2a45f08}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="msdyn_contentstore" displayName="File storage content reference" parentSchemaName="knowledgearticle" parentDisplayName="Knowledge Article" solution="msdynce_KnowledgeManagementPatch (9.0.26023.5001)">
+          <package appName="msdynce_KnowledgeManagement" version="9.0.26023.5001">msdynce_KnowledgeManagementAnchor (9.0.26023.5001)</package>
+        </Required>
+        <Dependent type="DVFileSearchAttribute" displayName="ppages_ca0a7a7c-50d8-4f28-94a6-8120d3958b0b.msdyn_contentstore" id.uniquename="ppages_ca0a7a7c-50d8-4f28-94a6-8120d3958b0b.msdyn_contentstore" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="msdyn_fileattachment" displayName="File Attachment" parentSchemaName="msdyn_kbattachment" parentDisplayName="Knowledge Article Attachment" solution="msdynce_KnowledgeManagementFeatures (9.0.26023.5001)">
+          <package appName="msdynce_KnowledgeManagement" version="9.0.26023.5001">msdynce_KnowledgeManagementAnchor (9.0.26023.5001)</package>
+        </Required>
+        <Dependent type="26" schemaName="Site 1 bot Answers" displayName="Site 1 bot Answers" parentSchemaName="msdyn_kbattachment" parentDisplayName="Knowledge Article Attachment" id="{157db2fa-8a39-4d40-923f-9617273c7418}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="2" schemaName="msdyn_fileattachment" displayName="File Attachment" parentSchemaName="msdyn_kbattachment" parentDisplayName="Knowledge Article Attachment" solution="msdynce_KnowledgeManagementFeatures (9.0.26023.5001)">
+          <package appName="msdynce_KnowledgeManagement" version="9.0.26023.5001">msdynce_KnowledgeManagementAnchor (9.0.26023.5001)</package>
+        </Required>
+        <Dependent type="DVFileSearchAttribute" displayName="ppages_4c1fdca8-313b-4402-ad5f-23e86681c6b8.msdyn_fileattachment" id.uniquename="ppages_4c1fdca8-313b-4402-ad5f-23e86681c6b8.msdyn_fileattachment" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="60" displayName="Account" parentDisplayName="Account" solution="msdynce_AppCommon (9.0.4.0066)" id="{8448b78f-8f42-454e-8e2a-f8196b0419af}">
+          <package appName="msdynce_AppCommon" version="9.0.26041.10001">msdynce_AppCommonAnchor (9.0.26041.10001)</package>
+        </Required>
+        <Dependent type="powerpagecomponent" id="{d960b1cd-4062-4afe-9361-abbd0eb0d75a}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="61" schemaName="msdyn_/Images/AppModule_Default_Icon.png" displayName="msdyn_/Images/AppModule_Default_Icon.png" solution="AppModuleWebResources (2.5)">
+          <package appName="AppModule Web Resources Package" version="2.5">AppModuleWebResources (2.5)</package>
+        </Required>
+        <Dependent type="80" schemaName="alm_ALM" displayName="ALM" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="66" schemaName="Microsoft.PowerApps.PowerAppsOneGrid" displayName="Microsoft.PowerApps.PowerAppsOneGrid" solution="BaseCustomControlsCore (9.0.2606.1007)">
+          <package appName="Base Custom Controls" version="9.0.2606.1007">BaseCustomControlsCore (9.0.2606.1007)</package>
+        </Required>
+        <Dependent type="68" id="{2be59a07-3c47-4e42-a7e4-b758dd1fbea1}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="66" schemaName="Microsoft.PowerApps.PowerAppsOneGrid" displayName="Microsoft.PowerApps.PowerAppsOneGrid" solution="BaseCustomControlsCore (9.0.2606.1007)">
+          <package appName="Base Custom Controls" version="9.0.2606.1007">BaseCustomControlsCore (9.0.2606.1007)</package>
+        </Required>
+        <Dependent type="68" id="{6bbfd322-1e5c-4729-a66b-dad9203b4f4f}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="powerpagecomponent" solution="Active" id="{1a606dcc-0d8c-7c29-f58c-e56fca0108d7}" />
+        <Dependent type="powerpagecomponent" id="{50570142-d22d-c2f7-66f9-27b5050c6f3c}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="powerpagecomponent" solution="Active" id="{1a606dcc-0d8c-7c29-f58c-e56fca0108d7}" />
+        <Dependent type="powerpagecomponent" id="{5c6845b2-c436-233f-ba30-d4fbc7cf7360}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="powerpagecomponent" solution="Active" id="{bb30e8d1-960f-b250-93af-83ba6fc0d626}" />
+        <Dependent type="powerpagecomponent" id="{13a1550d-581d-f3c3-2992-9584a2bc973b}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="powerpagecomponent" solution="Active" id="{bb30e8d1-960f-b250-93af-83ba6fc0d626}" />
+        <Dependent type="powerpagecomponent" id="{d6819e58-0e61-2b92-c3b2-4d58a30776f9}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="SettingDefinition" displayName="AppChannel" solution="msdyn_AppFrameworkInfraExtensions (1.0.0.17)" id.uniquename="AppChannel">
+          <package appName="PowerAppsAppFramework Package" version="1.0.0.25">PowerAppsAppFramework_Anchor (1.0.0.25)</package>
+        </Required>
+        <Dependent type="AppSetting" displayName="parentappmoduleid.uniquename=alm_ALM,settingdefinitionid.uniquename=AppChannel" id.parentappmoduleid.uniquename="alm_ALM" id.settingdefinitionid.uniquename="AppChannel" />
+      </MissingDependency>
+    </MissingDependencies>
   </SolutionManifest>
 </ImportExportXml>
