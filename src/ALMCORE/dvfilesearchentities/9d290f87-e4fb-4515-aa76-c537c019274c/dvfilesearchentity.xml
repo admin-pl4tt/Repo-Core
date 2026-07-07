@@ -1,0 +1,12 @@
+<dvfilesearchentity dvfilesearchentityid="9d290f87-e4fb-4515-aa76-c537c019274c">
+  <dvfilesearch>
+    <dvfilesearchid>1766b07d-69a6-4cac-9b6a-94c0a037a0d3</dvfilesearchid>
+  </dvfilesearch>
+  <entity>
+    <logicalname>msdyn_kbattachment</logicalname>
+  </entity>
+  <iscustomizable>1</iscustomizable>
+  <name>e4900ab0-76ec-4dcd-bc6f-3675bba7bb47-site-copilot.msdyn_kbattachment</name>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</dvfilesearchentity>
