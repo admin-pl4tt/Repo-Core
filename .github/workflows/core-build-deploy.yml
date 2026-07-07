@@ -121,30 +121,7 @@ jobs:
       # ----------------------------
       # Optional Deployment Section
       # ----------------------------
-      - name: Deploy CORE to DEV1
-        if: ${{ github.event.inputs.deploy == 'true' }}
-        uses: microsoft/powerplatform-actions/import-solution@v1
-        with:
-          environment-url: ${{ env.DEV1_ENV_URL }}
-          app-id: ${{ env.APP_ID }}
-          client-secret: ${{ env.CLIENT_SECRET }}
-          tenant-id: ${{ env.TENANT_ID }}
-          solution-file: out/ALMCORE_managed.zip
-          publish-changes: true
-          force-overwrite: true
-
-      - name: Deploy CORE to DEV2
-        if: ${{ github.event.inputs.deploy == 'true' }}
-        uses: microsoft/powerplatform-actions/import-solution@v1
-        with:
-          environment-url: ${{ env.DEV2_ENV_URL }}
-          app-id: ${{ env.APP_ID }}
-          client-secret: ${{ env.CLIENT_SECRET }}
-          tenant-id: ${{ env.TENANT_ID }}
-          solution-file: out/ALMCORE_managed.zip
-          publish-changes: true
-          force-overwrite: true
-
+      
       - name: Deploy CORE to TEST
         if: ${{ github.event.inputs.deploy == 'true' }}
         uses: microsoft/powerplatform-actions/import-solution@v1
